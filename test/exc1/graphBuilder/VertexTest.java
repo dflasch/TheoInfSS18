@@ -20,5 +20,11 @@ public class VertexTest {
 		assertNotEquals(new Vertex("name","data"),new Vertex("name","wrong"));
 		assertNotEquals(new Vertex("name","data"),new Vertex("wrong","wrong"));
 	}
+	
+	@Test 
+	public void toStringEqualsId() {
+		Vertex vertexToCheck = new Vertex("myname","mydata");
+		assertEquals("myname", vertexToCheck.toString());
+	}
 
 }

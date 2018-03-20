@@ -21,7 +21,12 @@ public class Vertex {
 		return false;
 
 	}
-
+	
+	@Override
+	public String toString() {
+		return this.id;
+	}
+	
 	Vertex(String id, String data) {
 		this.setName(id);
 		this.setData(data);

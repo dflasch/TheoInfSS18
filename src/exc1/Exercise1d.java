@@ -1,6 +1,14 @@
 package exc1;
 
+import java.io.IOException;
+
+import org.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.jgrapht.io.ExportException;
+
+import exc1.graphBuilder.Edge;
+import exc1.graphBuilder.Exporter;
 import exc1.graphBuilder.Parser;
+import exc1.graphBuilder.Vertex;
 
 public class Exercise1d {
 	
@@ -10,10 +18,11 @@ public class Exercise1d {
 			+ "kante B C 4\n" + "kante B G 6\n" + "kante C D 2\n" + "kante C I 15\n" + "kante D E 1\n" + "kante D I 1\n"
 			+ "kante E F 6\n" + "kante E H 3\n" + "kante F H 11\n" + "kante G H 15\n" + "kante G I 2\n" + "kante H I 4";
 
-	public static void main(String[] args) {
-
+	public static void main(String[] args) throws ExportException, IOException {
 		Parser graphParser = new Parser();
-		graphParser.createDirectedWeightedGraph(GRAPH_DESCRIPTION);
-
+		
+		DefaultDirectedWeightedGraph<Vertex, Edge> graph = graphParser.createDirectedWeightedGraph(GRAPH_DESCRIPTION);
+		
+		new Exporter(graph).printToFile("graphs/exercise-1-d.dot");
 	}
 }
