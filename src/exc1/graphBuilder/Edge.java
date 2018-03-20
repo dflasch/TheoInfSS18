@@ -9,7 +9,7 @@ public class Edge extends DefaultWeightedEdge{
 	private Vertex to;
 	
 	public String toString() {
-		return "a";
+		return from.getName() + "," + to.getName();
 	}
 	
 	public Edge(Vertex from, Vertex to) {
