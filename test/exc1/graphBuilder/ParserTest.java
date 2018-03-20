@@ -6,18 +6,26 @@ import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ParserTest {
+	
+	private Parser testedParser;
 
+	@Before
+	public void setup() {
+		this.testedParser = new Parser();
+	}
+	
 	@Test
 	public void loadsVertices() {
-		Parser testedParser = new Parser(""
+				
+		Graph<Vertex, Edge> graph = testedParser.createDirectedWeightedGraph(""
 				+ "knoten ersterKnoten\n"
 				+ "knoten zweiterKnoten");
-		
-		Graph<Vertex, DefaultWeightedEdge> graph = testedParser.buildDirectedGraph();
 		
 		assertThat(graph.vertexSet(),hasItem(new Vertex("ersterKnoten",null)));
 		assertThat(graph.vertexSet(),hasItem(new Vertex("zweiterKnoten",null)));
@@ -25,28 +33,26 @@ public class ParserTest {
 	
 	@Test
 	public void loadsSingleVertex() {
-		Parser testedParser = new Parser("knoten ersterKnoten");
-		Graph<Vertex, DefaultWeightedEdge> graph = testedParser.buildDirectedGraph();
+		Graph<Vertex, Edge> graph = testedParser.createDirectedWeightedGraph(""
+				+ "knoten ersterKnoten");
 		
 		assertThat(graph.vertexSet(),hasItem(new Vertex("ersterKnoten",null)));
 	}
 	
 	@Test
 	public void loadsVertexWithData() {
-		Parser testedParser = new Parser("knoten ersterKnoten someData");
-		Graph<Vertex, DefaultWeightedEdge> graph = testedParser.buildDirectedGraph();
+		Graph<Vertex, Edge> graph = testedParser.createDirectedWeightedGraph(""
+				+ "knoten ersterKnoten someData");
 
 		assertThat(graph.vertexSet(),hasItem(new Vertex("ersterKnoten","someData")));
 	}
 	
 	@Test
 	public void loadsVerticesWithData() {
-		Parser testedParser = new Parser(""
+		Graph<Vertex, Edge> graph = testedParser.createDirectedWeightedGraph(""
 				+ "knoten nullKnoten\n"
 				+ "knoten ersterKnoten someData\n"
 				+ "knoten zweiterKnoten someData2");
-		
-		Graph<Vertex, DefaultWeightedEdge> graph = testedParser.buildDirectedGraph();
 		
 		assertThat(graph.vertexSet(),hasItem(new Vertex("nullKnoten",null)));
 		assertThat(graph.vertexSet(),hasItem(new Vertex("ersterKnoten","someData")));
@@ -55,12 +61,10 @@ public class ParserTest {
 	
 	@Test
 	public void addsEdge() {
-		Parser testedParser = new Parser(""
+		Graph<Vertex, Edge> graph = testedParser.createDirectedWeightedGraph(""
 				+ "knoten ersterKnoten\n"
 				+ "knoten zweiterKnoten\n"
 				+ "kante ersterKnoten zweiterKnoten");
-		
-		Graph<Vertex, DefaultWeightedEdge> graph = testedParser.buildDirectedGraph();
 		
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
 		vertices.addAll(graph.vertexSet());
@@ -72,13 +76,12 @@ public class ParserTest {
 	
 	@Test
 	public void addsMultipleEdges() {
-		Parser testedParser = new Parser(""
+		Graph<Vertex, Edge> graph = testedParser.createDirectedWeightedGraph(""
 				+ "knoten ersterKnoten\n"
 				+ "knoten zweiterKnoten\n"
 				+ "kante ersterKnoten zweiterKnoten\n"
 				+ "kante zweiterKnoten ersterKnoten" );
 		
-		Graph<Vertex, DefaultWeightedEdge> graph = testedParser.buildDirectedGraph();
 		
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
 		vertices.addAll(graph.vertexSet());
@@ -91,13 +94,11 @@ public class ParserTest {
 	
 	@Test
 	public void ingoresComments() {
-		Parser testedParser = new Parser(""
+		Graph<Vertex, Edge> graph = testedParser.createDirectedWeightedGraph(""
 				+ "knoten ersterKnoten\n"
 				+ "#\n"
 				+ "#\n"
 				+ "knoten zweiterKnoten");
-		
-		Graph<Vertex, DefaultWeightedEdge> graph = testedParser.buildDirectedGraph();
 		
 		assertThat(graph.vertexSet(),hasItem(new Vertex("ersterKnoten",null)));
 		assertThat(graph.vertexSet(),hasItem(new Vertex("zweiterKnoten",null)));
@@ -106,13 +107,11 @@ public class ParserTest {
 	
 	@Test
 	public void ingoresEmptyLines() {
-		Parser testedParser = new Parser(""
+		Graph<Vertex, Edge> graph = testedParser.createDirectedWeightedGraph(""
 				+ "knoten ersterKnoten\n"
 				+ "\n"
 				+ "\n"
 				+ "knoten zweiterKnoten");
-		
-		Graph<Vertex, DefaultWeightedEdge> graph = testedParser.buildDirectedGraph();
 		
 		assertThat(graph.vertexSet(),hasItem(new Vertex("ersterKnoten",null)));
 		assertThat(graph.vertexSet(),hasItem(new Vertex("zweiterKnoten",null)));
@@ -120,24 +119,40 @@ public class ParserTest {
 	
 	@Test
 	public void addsWeight() {
-		Parser testedParser = new Parser(""
+		DefaultDirectedWeightedGraph<Vertex, Edge> graph = testedParser.createDirectedWeightedGraph(""
 				+ "knoten ersterKnoten\n"
 				+ "knoten zweiterKnoten\n"
 				+ "kante ersterKnoten zweiterKnoten 1\n"
 				+ "kante zweiterKnoten ersterKnoten 2");
-		
-		Graph<Vertex, DefaultWeightedEdge> graph = testedParser.buildDirectedGraph();
 		
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
 		vertices.addAll(graph.vertexSet());
 		Vertex firstVertex = vertices.get(0);
 		Vertex secondVertex = vertices.get(1);
 		
-		DefaultWeightedEdge firstEdge = graph.getEdge(firstVertex, secondVertex);
-		DefaultWeightedEdge secondEdge = graph.getEdge(secondVertex,firstVertex);
+		Edge firstEdge = graph.getEdge(firstVertex, secondVertex);
+		Edge secondEdge = graph.getEdge(secondVertex,firstVertex);
 		
 		assertEquals(graph.getEdgeWeight(firstEdge),1,0.1);
 		assertEquals(graph.getEdgeWeight(secondEdge),2,0.1);
 		
+	}
+	
+	@Test
+	public void createsUnweightedGraph() {
+		DefaultDirectedGraph<Vertex, Edge> graph = testedParser.createDirectedGraph(""
+				+ "knoten ersterKnoten\n"
+				+ "knoten zweiterKnoten\n"
+				+ "kante ersterKnoten zweiterKnoten\n"
+				+ "kante zweiterKnoten ersterKnoten 1" );
+		
+		
+		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
+		vertices.addAll(graph.vertexSet());
+		Vertex firstVertex = vertices.get(0);
+		Vertex secondVertex = vertices.get(1);
+		
+		assertNotNull(graph.getEdge(firstVertex, secondVertex));
+		assertNotNull(graph.getEdge(secondVertex,firstVertex ));
 	}
 }

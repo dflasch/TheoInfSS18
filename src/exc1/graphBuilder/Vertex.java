@@ -1,7 +1,7 @@
 package exc1.graphBuilder;
 
 public class Vertex {
-	private String name;
+	private String id;
 	private String data;
 
 	public boolean equals(Object other) {
@@ -22,17 +22,17 @@ public class Vertex {
 
 	}
 
-	Vertex(String name, String data) {
-		this.setName(name);
+	Vertex(String id, String data) {
+		this.setName(id);
 		this.setData(data);
 	}
 
 	public String getName() {
-		return name;
+		return id;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.id = name;
 	}
 
 	public String getData() {
