@@ -14,6 +14,7 @@ public class Parser {
 	private final String VERTEX_STR = "knoten";
 	private final String EDGE_STR = "kante";
 	private final String NEWLINE = "\\r?\\n";
+	private final String BLANKS = "\\s+";
 	
 	private HashMap<String,Vertex> verticesMap;
 	private ArrayList<Edge> edges;
@@ -67,7 +68,7 @@ public class Parser {
 		this.weights.clear();
 		
 		for (String eachLine : graphDescription.split(NEWLINE)) {
-			String[] lineTokens = eachLine.split(" ");
+			String[] lineTokens = eachLine.split(BLANKS);
 			Queue<String> tokens = new LinkedList<String>(Arrays.asList(lineTokens));
 
 			String rootToken = tokens.poll();

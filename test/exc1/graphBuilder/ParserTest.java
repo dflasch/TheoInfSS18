@@ -38,6 +38,15 @@ public class ParserTest {
 		
 		assertThat(graph.vertexSet(),hasItem(new Vertex("ersterKnoten",null)));
 	}
+
+	@Test
+	public void handlesMultipleWhitespaces() {
+		Graph<Vertex, Edge> graph = testedParser.createDirectedWeightedGraph(""
+				+ "knoten                      ersterKnoten");
+		
+		assertThat(graph.vertexSet(),hasItem(new Vertex("ersterKnoten",null)));
+	}
+	
 	
 	@Test
 	public void loadsVertexWithData() {
