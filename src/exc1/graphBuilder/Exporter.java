@@ -8,6 +8,7 @@ import org.jgrapht.Graph;
 import org.jgrapht.io.DOTExporter;
 import org.jgrapht.io.ExportException;
 import org.jgrapht.io.StringComponentNameProvider;
+import org.jgrapht.io.ComponentNameProvider;
 
 public class Exporter {
 	private Graph<Vertex, Edge> graph;
@@ -27,9 +28,17 @@ public class Exporter {
 		file.createNewFile();
 		FileOutputStream out = new FileOutputStream(file);
 		DOTExporter<Vertex, Edge> exp = new DOTExporter<Vertex, Edge>(
-	            new StringComponentNameProvider<Vertex>(), null, null);
+	            new StringComponentNameProvider<Vertex>(), null, new WeightProvider());
 	    exp.exportGraph(graph, out);
 	}
 	
-	
+
+	private class WeightProvider implements ComponentNameProvider<Edge>{
+
+		@Override
+		public String getName(Edge edge) {
+			return "" + Double.valueOf(graph.getEdgeWeight(edge)).intValue();
+		}
+		
+	}
 }

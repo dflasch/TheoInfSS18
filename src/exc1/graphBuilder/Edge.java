@@ -7,7 +7,11 @@ public class Edge extends DefaultWeightedEdge{
 	private static final long serialVersionUID = 1L;
 	private Vertex from;
 	private Vertex to;
-
+	
+	public String toString() {
+		return "a";
+	}
+	
 	public Edge(Vertex from, Vertex to) {
 		this.setFrom(from);
 		this.setTo(to);

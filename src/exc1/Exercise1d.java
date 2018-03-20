@@ -25,4 +25,5 @@ public class Exercise1d {
 		
 		new Exporter(graph).printToFile("graphs/exercise-1-d.dot");
 	}
+	
 }
