@@ -18,18 +18,24 @@ public class Exporter {
 	}
 
 	public void printToConsole() throws ExportException {
-		DOTExporter<Vertex, Edge> exp = new DOTExporter<Vertex, Edge>(
-	            new StringComponentNameProvider<Vertex>(), null, null);
-	    exp.exportGraph(graph, System.out);
+	    toDotFormat(graph).exportGraph(graph, System.out);
 	}
 	
 	public void printToFile(String path) throws ExportException, IOException {
 		File file = new File(path);
+		
+		if(!file.getParentFile().exists())
+			file.getParentFile().mkdir();
 		file.createNewFile();
+		
 		FileOutputStream out = new FileOutputStream(file);
-		DOTExporter<Vertex, Edge> exp = new DOTExporter<Vertex, Edge>(
+		
+		toDotFormat(graph).exportGraph(graph, out);
+	}
+	
+	private DOTExporter<Vertex, Edge> toDotFormat(Graph<Vertex,Edge> graph){
+		return new DOTExporter<Vertex, Edge>(
 	            new StringComponentNameProvider<Vertex>(), null, new WeightProvider());
-	    exp.exportGraph(graph, out);
 	}
 	
 
