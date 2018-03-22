@@ -21,8 +21,8 @@ public class Exercise1d {
         
         DefaultDirectedWeightedGraph<Vertex, Edge> graph = graphParser.createDirectedWeightedGraph(graphDescription);
 
-        new Exporter(graph).printToConsole();
-        new Exporter(graph).printToFile("output/exercise-1-d.dot");
+        new Exporter(graph).printToConsole().printToFile("output/exercise-1-d.dot");
+        
     }
 
 }

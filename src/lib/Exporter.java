@@ -17,11 +17,12 @@ public class Exporter {
         this.graph = graph;
     }
 
-    public void printToConsole() throws ExportException {
+    public Exporter printToConsole() throws ExportException {
         toDotFormat(graph).exportGraph(graph, System.out);
+        return this;
     }
 
-    public void printToFile(String path) throws ExportException, IOException {
+    public Exporter printToFile(String path) throws ExportException, IOException {
         File file = new File(path);
 
         if (!file.getParentFile().exists())
@@ -31,6 +32,7 @@ public class Exporter {
         FileOutputStream out = new FileOutputStream(file);
 
         toDotFormat(graph).exportGraph(graph, out);
+        return this;
     }
 
     private DOTExporter<Vertex, Edge> toDotFormat(Graph<Vertex, Edge> graph) {
