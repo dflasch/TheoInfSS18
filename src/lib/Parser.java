@@ -1,4 +1,4 @@
-package exc1.graphBuilder;
+package lib;
 
 import java.util.ArrayList;
 import java.util.Arrays;

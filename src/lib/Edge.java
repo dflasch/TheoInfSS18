@@ -1,4 +1,4 @@
-package exc1.graphBuilder;
+package lib;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
 

@@ -1,4 +1,4 @@
-package exc1.graphBuilder;
+package lib;
 
 public class Vertex {
     private String id;

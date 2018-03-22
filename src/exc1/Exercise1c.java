@@ -1,6 +1,6 @@
 package exc1;
 
-import exc1.graphBuilder.Parser;
+import lib.Parser;
 
 public class Exercise1c {
 

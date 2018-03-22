@@ -5,10 +5,10 @@ import java.io.IOException;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.jgrapht.io.ExportException;
 
-import exc1.graphBuilder.Edge;
-import exc1.graphBuilder.Exporter;
-import exc1.graphBuilder.Parser;
-import exc1.graphBuilder.Vertex;
+import lib.Edge;
+import lib.Exporter;
+import lib.Parser;
+import lib.Vertex;
 
 public class Exercise1d {
 

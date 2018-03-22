@@ -1,8 +1,10 @@
-package exc1.graphBuilder;
+package lib;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import lib.Vertex;
 
 public class VertexTest {
 

@@ -1,4 +1,4 @@
-package exc1.graphBuilder;
+package lib;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,10 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.junit.Before;
 import org.junit.Test;
+
+import lib.Edge;
+import lib.Parser;
+import lib.Vertex;
 
 public class ParserTest {
 
