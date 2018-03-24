@@ -28,6 +28,12 @@ public class Vertex {
         return this.id;
     }
 
+
+    Vertex(String id) {
+        this.setName(id);
+        this.setData("");
+    }
+    
     Vertex(String id, String data) {
         this.setName(id);
         this.setData(data);

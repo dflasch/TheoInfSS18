@@ -22,7 +22,7 @@ public class Exporter {
         return this;
     }
 
-    public Exporter printToFile(String path) throws ExportException, IOException {
+    public Exporter printToFile(String path, boolean withWeights) throws ExportException, IOException {
         File file = new File(path);
 
         if (!file.getParentFile().exists())
@@ -30,12 +30,19 @@ public class Exporter {
         file.createNewFile();
 
         FileOutputStream out = new FileOutputStream(file);
-
-        toDotFormat(graph).exportGraph(graph, out);
+        
+        if(withWeights)
+            toDotFormatWithWeight(graph).exportGraph(graph, out);
+        else
+            toDotFormat(graph).exportGraph(graph, out);
+        
         return this;
     }
 
     private DOTExporter<Vertex, Edge> toDotFormat(Graph<Vertex, Edge> graph) {
+        return new DOTExporter<Vertex, Edge>(new StringComponentNameProvider<Vertex>(), null, null);
+    }
+    private DOTExporter<Vertex, Edge> toDotFormatWithWeight(Graph<Vertex, Edge> graph) {
         return new DOTExporter<Vertex, Edge>(new StringComponentNameProvider<Vertex>(), null, new WeightProvider());
     }
 
