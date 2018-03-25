@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import org.jgrapht.graph.AsUndirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 
@@ -25,7 +26,16 @@ public class Parser {
         this.edges = new ArrayList<Edge>();
         this.weights = new HashMap<Edge, Double>();
     }
-
+    
+    public AsUndirectedGraph<Vertex,Edge> createUndirectedGraph(String graphDescription){
+        DefaultDirectedGraph<Vertex, Edge> directedGraph = createDirectedGraph(graphDescription);
+        return new AsUndirectedGraph<Vertex,Edge> (directedGraph);
+    }
+    public AsUndirectedGraph<Vertex,Edge> createUndirectedWeightedGraph(String graphDescription){
+        DefaultDirectedGraph<Vertex, Edge> directedWeightedGraph = createDirectedWeightedGraph(graphDescription);
+        return new AsUndirectedGraph<Vertex,Edge> (directedWeightedGraph);
+    }
+    
     public DefaultDirectedGraph<Vertex, Edge> createDirectedGraph(String graphDescription) {
         DefaultDirectedGraph<Vertex, Edge> graph = new DefaultDirectedGraph<Vertex, Edge>(Edge.class);
 

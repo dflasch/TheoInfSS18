@@ -52,11 +52,14 @@ public class CyclicChecker {
     }
     
     public Set<Vertex> getSuccessorsFor(Vertex vertex){
-        Set<Edge> allEdgesOfVertex = graph.outgoingEdgesOf(vertex);
+        Set<Edge> allEdgesOfVertex = graph.edgesOf(vertex);
         Set<Vertex> vertexes = new HashSet<Vertex>();
         
-        for(Edge eachEdge : allEdgesOfVertex)
+        for(Edge eachEdge : allEdgesOfVertex) {
             vertexes.add(eachEdge.getTo());
+            if(graph.getType().isUndirected())
+                vertexes.add(eachEdge.getFrom());
+        }
         
         if(!vertexStack.empty())
             vertexes.remove(vertexStack.pop());

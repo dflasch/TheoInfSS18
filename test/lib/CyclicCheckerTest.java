@@ -8,7 +8,26 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.junit.Test;
 
 public class CyclicCheckerTest {
+    
+    @Test 
+    public void findsCircleInUndirectedGraph() {
+        Vertex first = new Vertex("1");
+        Vertex second = new Vertex("2");
+        Vertex third = new Vertex("3");
+        
+        DefaultDirectedGraph<Vertex, Edge> directedGraph = new DefaultDirectedGraph<Vertex, Edge>(Edge.class);
+        directedGraph.addVertex(first);
+        directedGraph.addVertex(second);
+        directedGraph.addVertex(third);
+        directedGraph.addEdge(first, second, new Edge(first,second));
+        directedGraph.addEdge(first, third, new Edge(first,third));
+        directedGraph.addEdge(second, third, new Edge(second,third));
+        
+        AsUndirectedGraph<Vertex, Edge> undirectedGraph = new AsUndirectedGraph<Vertex, Edge>(directedGraph); 
 
+        assertTrue(new CyclicChecker(undirectedGraph).isCyclic());
+    }
+    
     @Test
     public void returnsCyclicTwoVerticesDirected() {
         Vertex first = new Vertex("1");
