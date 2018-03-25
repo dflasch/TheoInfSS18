@@ -1,4 +1,4 @@
-package lib;
+package test.lib.graph;
 
 import static org.junit.Assert.*;
 
@@ -11,9 +11,9 @@ import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.junit.Before;
 import org.junit.Test;
 
-import lib.Edge;
-import lib.Parser;
-import lib.Vertex;
+import lib.graph.Edge;
+import lib.graph.Parser;
+import lib.graph.Vertex;
 
 public class ParserTest {
 

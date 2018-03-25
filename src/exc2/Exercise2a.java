@@ -5,12 +5,12 @@ import java.io.IOException;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.io.ExportException;
 
-import lib.Edge;
-import lib.EulerianChecker;
-import lib.Exporter;
-import lib.Parser;
-import lib.Reader;
-import lib.Vertex;
+import lib.graph.Edge;
+import lib.graph.Parser;
+import lib.graph.Vertex;
+import lib.graph.test.EulerianChecker;
+import lib.io.Exporter;
+import lib.io.Reader;
 
 public class Exercise2a {
 

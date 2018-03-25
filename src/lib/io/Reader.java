@@ -1,4 +1,4 @@
-package lib;
+package lib.io;
 
 import java.io.BufferedReader;
 import java.io.File;

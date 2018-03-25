@@ -1,4 +1,4 @@
-package lib;
+package lib.graph.test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Stack;
 import org.jgrapht.Graph;
+
+import lib.graph.Edge;
+import lib.graph.Vertex;
 
 public class CyclicChecker {
 
@@ -38,7 +41,7 @@ public class CyclicChecker {
         return isCyclic;
     }
 
-    public void dfs(Vertex vertex) {
+    private void dfs(Vertex vertex) {
         if (finishedVertexes.contains(vertex))
             return;
 
@@ -61,7 +64,7 @@ public class CyclicChecker {
 
     }
 
-    public boolean isCyclic(Vertex firstVertex, Vertex secondVertex) {
+    private boolean isCyclic(Vertex firstVertex, Vertex secondVertex) {
         if (graph.getType().isUndirected())
             return true;
 
@@ -73,7 +76,7 @@ public class CyclicChecker {
         return false;
     }
 
-    public Set<Vertex> getTargetVerticesFor(Set<Edge> edges) {
+    private Set<Vertex> getTargetVerticesFor(Set<Edge> edges) {
         Set<Vertex> vertices = new HashSet<Vertex>();
 
         for (Edge eachEdge : edges)
@@ -82,7 +85,7 @@ public class CyclicChecker {
         return vertices;
     }
 
-    public Set<Vertex> getSuccessorsFor(Vertex vertex) {
+    private Set<Vertex> getSuccessorsFor(Vertex vertex) {
         Set<Edge> allEdgesOfVertex = graph.edgesOf(vertex);
         Set<Vertex> vertices = new HashSet<Vertex>();
 
@@ -106,7 +109,7 @@ public class CyclicChecker {
             vertexes.remove(vertexStack.pop());
     }
 
-    public void initialize() {
+    private void initialize() {
         this.vistedVertexes = new HashSet<Vertex>();
         this.finishedVertexes = new HashSet<Vertex>();
         this.vertexStack = new Stack<Vertex>();

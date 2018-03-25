@@ -1,10 +1,10 @@
-package lib;
+package test.lib.graph;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import lib.Vertex;
+import lib.graph.Vertex;
 
 public class VertexTest {
 

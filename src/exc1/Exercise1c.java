@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import org.jgrapht.io.ExportException;
 
-import lib.Exporter;
-import lib.Parser;
-import lib.Reader;
+import lib.graph.Parser;
+import lib.io.Exporter;
+import lib.io.Reader;
 
 public class Exercise1c {
 

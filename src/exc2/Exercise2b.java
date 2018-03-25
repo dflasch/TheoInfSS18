@@ -5,11 +5,11 @@ import java.io.IOException;
 import org.jgrapht.Graph;
 import org.jgrapht.traverse.DepthFirstIterator;
 
-import lib.Edge;
-import lib.Parser;
-import lib.PrintingTraversalListener;
-import lib.Reader;
-import lib.Vertex;
+import lib.graph.Edge;
+import lib.graph.Parser;
+import lib.graph.PrintingTraversalListener;
+import lib.graph.Vertex;
+import lib.io.Reader;
 
 public class Exercise2b {
     

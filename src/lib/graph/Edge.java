@@ -1,4 +1,4 @@
-package lib;
+package lib.graph;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
 

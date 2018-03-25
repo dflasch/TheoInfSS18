@@ -1,8 +1,18 @@
-package lib;
+package lib.graph;
 
 public class Vertex {
     private String id;
     private String data;
+
+    public Vertex(String id) {
+        this.setName(id);
+        this.setData("");
+    }
+    
+    public Vertex(String id, String data) {
+        this.setName(id);
+        this.setData(data);
+    }
 
     public boolean equals(Object other) {
         if (other == null)
@@ -26,17 +36,6 @@ public class Vertex {
     @Override
     public String toString() {
         return this.id;
-    }
-
-
-    Vertex(String id) {
-        this.setName(id);
-        this.setData("");
-    }
-    
-    Vertex(String id, String data) {
-        this.setName(id);
-        this.setData(data);
     }
 
     public String getName() {

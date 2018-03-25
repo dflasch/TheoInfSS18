@@ -1,4 +1,4 @@
-package lib;
+package lib.graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +70,7 @@ public class Parser {
 
     }
 
-    public void parse(String graphDescription) {
+    private void parse(String graphDescription) {
         this.verticesMap.clear();
         this.edges.clear();
         this.weights.clear();

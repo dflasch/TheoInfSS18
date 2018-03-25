@@ -1,8 +1,11 @@
-package lib;
+package lib.graph.test;
 
 
 import org.jgrapht.Graph;
 import org.jgrapht.alg.ConnectivityInspector;
+
+import lib.graph.Edge;
+import lib.graph.Vertex;
 
 public class EulerianChecker {
     

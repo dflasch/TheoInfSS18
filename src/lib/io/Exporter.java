@@ -1,4 +1,4 @@
-package lib;
+package lib.io;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,6 +8,10 @@ import org.jgrapht.Graph;
 import org.jgrapht.io.DOTExporter;
 import org.jgrapht.io.ExportException;
 import org.jgrapht.io.StringComponentNameProvider;
+
+import lib.graph.Edge;
+import lib.graph.Vertex;
+
 import org.jgrapht.io.ComponentNameProvider;
 
 public class Exporter {

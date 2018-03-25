@@ -1,4 +1,4 @@
-package lib;
+package lib.graph.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,6 +7,10 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.AsUndirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.junit.Test;
+
+import lib.graph.Edge;
+import lib.graph.Vertex;
+import lib.graph.test.EulerianChecker;
 
 public class EulerianCheckerTest {
 
