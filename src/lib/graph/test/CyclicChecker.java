@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Stack;
 import org.jgrapht.Graph;
 
 import lib.graph.Edge;
 import lib.graph.Vertex;
+import lib.graph.VisitListener;
 
 public class CyclicChecker {
 
@@ -16,12 +16,16 @@ public class CyclicChecker {
     private Set<Vertex> vistedVertexes;
     private Set<Vertex> finishedVertexes;
     private boolean isCyclic;
-    private Stack<Vertex> vertexStack;
+    private VisitListener visitVertexListener;
 
     public CyclicChecker(Graph<Vertex, Edge> graph) {
         this.graph = graph;
     }
-
+    
+    public void setVisitVertexListener(VisitListener listener) {
+        this.visitVertexListener = listener;
+    }
+    
     public boolean isCyclic() {
         initialize();
 
@@ -31,40 +35,42 @@ public class CyclicChecker {
         if (allVertices.size() < 2)
             return false;
 
-        if (allVertices.size() == 2 && isCyclic(allVertices.get(0), allVertices.get(1)))
+        if (allVertices.size() == 2 && hasBidirectionalConnectionBetween(allVertices.get(0), allVertices.get(1)))
             return true;
         
         Iterator<Vertex> verticeIterator = allVertices.iterator();
-        while(verticeIterator.hasNext() && !isCyclic)
+        while (verticeIterator.hasNext() && !isCyclic)
             dfs(verticeIterator.next());
 
         return isCyclic;
     }
-
+    
     private void dfs(Vertex vertex) {
-        if (finishedVertexes.contains(vertex))
+        dfs(vertex, null);
+    }
+    
+    private void dfs(Vertex currentVertex, Vertex lastVertex) {
+        if (finishedVertexes.contains(currentVertex) || isCyclic)
             return;
-
-        if (vistedVertexes.contains(vertex)) {
+        
+        if(visitVertexListener != null)
+            visitVertexListener.onVisit(currentVertex);
+        
+        if (vistedVertexes.contains(currentVertex)) {
             isCyclic = true;
             return;
         }
-
-        vistedVertexes.add(vertex);
         
-        Set<Vertex> successorVertices = getSuccessorsFor(vertex);
-        forgetCallingVertexIn(successorVertices);
+        vistedVertexes.add(currentVertex);
         
-        for (Vertex eachVertex : successorVertices) {
-            rememberCallingVertex(vertex);
-            dfs(eachVertex);
-        }
-
-        finishedVertexes.add(vertex);
+        for (Vertex eachVertex : getSuccessorsFor(currentVertex,lastVertex))
+            dfs(eachVertex,currentVertex);
+            
+        finishedVertexes.add(currentVertex);
 
     }
 
-    private boolean isCyclic(Vertex firstVertex, Vertex secondVertex) {
+    private boolean hasBidirectionalConnectionBetween(Vertex firstVertex, Vertex secondVertex) {
         if (graph.getType().isUndirected())
             return true;
 
@@ -85,8 +91,8 @@ public class CyclicChecker {
         return vertices;
     }
 
-    private Set<Vertex> getSuccessorsFor(Vertex vertex) {
-        Set<Edge> allEdgesOfVertex = graph.edgesOf(vertex);
+    private Set<Vertex> getSuccessorsFor(Vertex currentVertex, Vertex lastVertex) {
+        Set<Edge> allEdgesOfVertex = graph.edgesOf(currentVertex);
         Set<Vertex> vertices = new HashSet<Vertex>();
 
         for (Edge eachEdge : allEdgesOfVertex) {
@@ -95,24 +101,16 @@ public class CyclicChecker {
                 vertices.add(eachEdge.getFrom());
         }
 
-        vertices.remove(vertex);
-
+        vertices.remove(currentVertex);
+        if(lastVertex != null)
+            vertices.remove(lastVertex);
+        
         return vertices;
-    }
-
-    private void rememberCallingVertex(Vertex vertex) {
-        vertexStack.push(vertex);
-    }
-
-    private void forgetCallingVertexIn(Set<Vertex> vertexes) {
-        if (!vertexStack.empty())
-            vertexes.remove(vertexStack.pop());
     }
 
     private void initialize() {
         this.vistedVertexes = new HashSet<Vertex>();
         this.finishedVertexes = new HashSet<Vertex>();
-        this.vertexStack = new Stack<Vertex>();
         this.isCyclic = false;
     }
 }
