@@ -92,16 +92,15 @@ public class CyclicChecker {
     }
 
     private Set<Vertex> getSuccessorsFor(Vertex currentVertex, Vertex lastVertex) {
-        Set<Edge> allEdgesOfVertex = graph.edgesOf(currentVertex);
+        Set<Edge> outgoingEdgesOfVertex = graph.outgoingEdgesOf(currentVertex);
         Set<Vertex> vertices = new HashSet<Vertex>();
-
-        for (Edge eachEdge : allEdgesOfVertex) {
-            vertices.add(eachEdge.getTo());
-            if (graph.getType().isUndirected())
+        
+        for (Edge eachEdge : outgoingEdgesOfVertex)
+            if(eachEdge.getTo().equals(currentVertex))
                 vertices.add(eachEdge.getFrom());
-        }
+            else
+                vertices.add(eachEdge.getTo());
 
-        vertices.remove(currentVertex);
         if(lastVertex != null)
             vertices.remove(lastVertex);
         

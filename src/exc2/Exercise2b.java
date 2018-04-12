@@ -6,30 +6,30 @@ import org.jgrapht.Graph;
 import org.jgrapht.traverse.DepthFirstIterator;
 
 import lib.graph.Edge;
-import lib.graph.Parser;
 import lib.graph.PrintingTraversalListener;
 import lib.graph.Vertex;
+import lib.graph.build.GraphBuilder;
+import lib.graph.build.GraphDescription;
+import lib.graph.build.Parser;
 import lib.io.Reader;
 
 public class Exercise2b {
     
     public static void main(String args[]) throws IOException {
-        Reader fileReader = new Reader();
-        Parser graphParser = new Parser();
+        GraphDescription dijkstraGraphDescription = Parser.parseDescription(new Reader().readFile("input/Dijkstra.txt"));
+        GraphDescription euler1GraphDescription = Parser.parseDescription(new Reader().readFile("input/Euler1.txt"));
+        GraphDescription euler2GraphDescription = Parser.parseDescription(new Reader().readFile("input/Euler2.txt"));
 
-        String graphDescription = fileReader.readFile("input/Dijkstra.txt");
         System.out.println("Depth First for Dijkstra:");
-        traverseWithDepthFirst(graphParser.createDirectedGraph(graphDescription));
+        traverseWithDepthFirst(new GraphBuilder(dijkstraGraphDescription).buildDirectedGraph());
         System.out.println("\n");
         
-        graphDescription = fileReader.readFile("input/Euler1.txt");
         System.out.println("Depth First for Euler1:");
-        traverseWithDepthFirst(graphParser.createDirectedGraph(graphDescription));
+        traverseWithDepthFirst(new GraphBuilder(euler1GraphDescription).buildDirectedGraph());
         System.out.println("\n");
         
-        graphDescription = fileReader.readFile("input/Euler2.txt");
         System.out.println("Depth First for Euler2:");
-        traverseWithDepthFirst(graphParser.createDirectedGraph(graphDescription));
+        traverseWithDepthFirst(new GraphBuilder(euler2GraphDescription).buildDirectedGraph());
         System.out.println("\n");
         
     }
