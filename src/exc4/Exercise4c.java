@@ -21,7 +21,7 @@ public class Exercise4c {
 
         FordFulkerson fordFulkersonAlgorithm = new FordFulkerson(CircularDemGraph);
         
-        if(fordFulkersonAlgorithm.solvesCircularDemand())
+        if(fordFulkersonAlgorithm.solvesCirculationDemand())
             System.out.println("Circulation Demand possible");
         else 
             System.out.println("Circulation Demand NOT possible");

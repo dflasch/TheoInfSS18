@@ -26,46 +26,23 @@ public class FordFulkerson {
         this.originalGraph = graph;
     }
 
-    public boolean solvesCircularDemand() {
-        Vertex source = new Vertex("S*");
-        Vertex target = new Vertex("T*");
+    public boolean solvesCirculationDemand() {
+        double neededFlow;
+        Vertex source, target;
         
         buildBasicGraph();
         
-        double neededFlow = addSourceAndTargetToGraph(source, target);
+        source = new Vertex("S*");
+        target = new Vertex("T*");
+        neededFlow = addSourceAndTargetToGraph(source, target);
 
         initialize();
 
-        double actualflow = doFordFulkerson(source, target);
-
-        if (actualflow == neededFlow)
+        if (neededFlow == doFordFulkerson(source, target))
             return true;
 
         return false;
 
-    }
-
-    private double addSourceAndTargetToGraph(Vertex source, Vertex target) {
-        Set<Vertex> verticesToProcess = new HashSet<Vertex>(graph.vertexSet());
-        
-        double neededFlow = 0.0;
-        this.graph.addVertex(source);
-        this.graph.addVertex(target);
-
-        for (Vertex eachVertex : verticesToProcess) {
-            double vertexValue = Double.parseDouble(eachVertex.getData());
-            if (vertexValue < 0.0) {
-                Edge newEdge = new Edge(source, eachVertex);
-                this.graph.addEdge(source, eachVertex, newEdge);
-                this.graph.setEdgeWeight(newEdge, Math.abs(vertexValue));
-            } else if (vertexValue > 0.0) {
-                Edge newEdge = new Edge(eachVertex, target);
-                this.graph.addEdge(eachVertex, target, newEdge);
-                this.graph.setEdgeWeight(newEdge, vertexValue);
-                neededFlow += vertexValue;
-            }
-        }
-        return neededFlow;
     }
 
     public int calculateDisjointPathes(Vertex source, Vertex target) {
@@ -144,6 +121,29 @@ public class FordFulkerson {
             graph.setEdgeWeight(newEdge, graph.getEdgeWeight(eachEdge));
             currentFlow.put(newEdge, graph.getEdgeWeight(eachEdge));
         }
+    }
+
+    private double addSourceAndTargetToGraph(Vertex source, Vertex target) {
+        Set<Vertex> verticesToProcess = new HashSet<Vertex>(graph.vertexSet());
+        
+        double neededFlow = 0.0;
+        this.graph.addVertex(source);
+        this.graph.addVertex(target);
+
+        for (Vertex eachVertex : verticesToProcess) {
+            double vertexValue = Double.parseDouble(eachVertex.getData());
+            if (vertexValue < 0.0) {
+                Edge newEdge = new Edge(source, eachVertex);
+                this.graph.addEdge(source, eachVertex, newEdge);
+                this.graph.setEdgeWeight(newEdge, Math.abs(vertexValue));
+            } else if (vertexValue > 0.0) {
+                Edge newEdge = new Edge(eachVertex, target);
+                this.graph.addEdge(eachVertex, target, newEdge);
+                this.graph.setEdgeWeight(newEdge, vertexValue);
+                neededFlow += vertexValue;
+            }
+        }
+        return neededFlow;
     }
 
     private void setCurrentFlowInAllEdgesToZero() {
