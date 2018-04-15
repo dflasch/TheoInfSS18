@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DirectedWeightedMultigraph;
 import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.jgrapht.graph.SimpleGraph;
@@ -19,12 +21,28 @@ public class GraphBuilder {
     public GraphBuilder() {
         graphDescriptions = new ArrayList<GraphDescription>();
     }
-
+    
     public GraphBuilder(GraphDescription graphDescription) {
         this();
         graphDescriptions.add(graphDescription);
     }
+    
+    public DirectedWeightedMultigraph<Vertex,Edge> buildDirectedWeightedMultigraph(){
+        DirectedWeightedMultigraph<Vertex, Edge> graph = new DirectedWeightedMultigraph<Vertex, Edge>(Edge.class);
 
+        addVerticesEdgesAndWeightsTo(graph);
+
+        return graph;
+    }
+    
+    public DefaultDirectedGraph<Vertex,Edge> buildDefaultDirectedGraph(){
+        DefaultDirectedGraph<Vertex, Edge> graph = new DefaultDirectedGraph<Vertex, Edge>(Edge.class);
+
+        addVerticesAndEdgesTo(graph);
+
+        return graph;
+    }
+    
     public SimpleGraph<Vertex, Edge> buildUndirectedGraph() {
         SimpleGraph<Vertex, Edge> graph = new SimpleGraph<Vertex, Edge>(Edge.class);
 
